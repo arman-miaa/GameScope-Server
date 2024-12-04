@@ -38,6 +38,7 @@ async function run() {
       );
       
     const gamerCollection = client.db("assignment-10").collection("Reviews");
+    const watchListsCollection = client.db("assignment-10").collection("watchLists");
 
       const userCollection = client.db("assignment-10").collection("users");
       const personCollection = client.db("assignment-10").collection("person");
@@ -99,9 +100,20 @@ async function run() {
 
 
 
+    
+    
 
     //
+
+
+    // watch lislt
     
+    app.post('/watchlist', async (req, res) => {
+      console.log(req.body);
+      const newWatchList = req.body;
+      const result = await watchListsCollection.insertOne(newWatchList);
+      res.send(result);
+    })
     
     
 
