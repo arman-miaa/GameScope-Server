@@ -45,12 +45,31 @@ async function run() {
 
 
       // get data
-      app.get("/reviews", async (req, res) => {
-        const cursor = gamerCollection.find();
-        const result = await cursor.toArray();
-        res.send(result);
-      });
-    
+   app.get("/reviews", async (req, res) => {
+     const { sortField, genre } = req.query;
+
+     // Default query object for filtering by genre
+     const query = genre ? { genres: genre } : {};
+
+     // Sort criteria object
+     const sortCriteria = {};
+     if (sortField === "Rating") {
+       sortCriteria.rating = -1; // Sort by rating in descending order
+     } else if (sortField === "Year") {
+       sortCriteria.year = -1; // Sort by year in descending order
+     }
+
+     try {
+       // Apply filter and sort to the query
+       const cursor = gamerCollection.find(query).sort(sortCriteria);
+       const result = await cursor.toArray();
+       res.send(result);
+     } catch (error) {
+       console.error("Error fetching reviews:", error);
+       res.status(500).send("Error fetching reviews.");
+     }
+   });
+
     
     //
 
