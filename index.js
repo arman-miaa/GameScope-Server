@@ -73,6 +73,7 @@ async function run() {
     // riview details
      app.get("/reviews/:id", async (req, res) => {
        const id = req.params.id;
+       console.log('get id',id);
        const query = { _id: new ObjectId(id) };
        const result = await gamerCollection.findOne(query);
        res.send(result);
