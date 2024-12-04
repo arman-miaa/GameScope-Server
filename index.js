@@ -69,6 +69,14 @@ async function run() {
        res.status(500).send("Error fetching reviews.");
      }
    });
+    
+    // riview details
+     app.get("/reviews/:id", async (req, res) => {
+       const id = req.params.id;
+       const query = { _id: new ObjectId(id) };
+       const result = await gamerCollection.findOne(query);
+       res.send(result);
+     });
 
     
     //
@@ -96,12 +104,7 @@ async function run() {
     
     
 
-         app.get("/users/:id", async (req, res) => {
-           const id = req.params.id;
-           const query = { _id: new ObjectId(id) };
-           const result = await userCollection.findOne(query);
-           res.send(result);
-         });
+       
 
       app.get('/person', async (req, res) => {
           const curson = personCollection.find();
