@@ -37,7 +37,7 @@ async function run() {
       "Pinged your deployment. You successfully connected to MongoDB!"
       );
       
-    const gamerCollection = client.db("assignment-10").collection("games");
+    const gamerCollection = client.db("assignment-10").collection("Reviews");
 
       const userCollection = client.db("assignment-10").collection("users");
       const personCollection = client.db("assignment-10").collection("person");
@@ -45,11 +45,37 @@ async function run() {
 
 
       // get data
-      app.get('/games', async (req, res) => {
-          const cursor = gamerCollection.find();
-          const result = await cursor.toArray();
-          res.send(result);
-      })
+      app.get("/reviews", async (req, res) => {
+        const cursor = gamerCollection.find();
+        const result = await cursor.toArray();
+        res.send(result);
+      });
+    
+    
+    //
+
+    // review post
+     app.post("/reviews", async (req, res) => {
+       console.log(req.body);
+       const newGame = req.body;
+       const result = await gamerCollection.insertOne(newGame);
+       res.send(result);
+     });
+
+
+
+
+
+
+
+
+
+
+
+    //
+    
+    
+    
 
          app.get("/users/:id", async (req, res) => {
            const id = req.params.id;
@@ -101,12 +127,7 @@ async function run() {
       //     res.send(result);
           
       // })
-      app.post("/games", async (req, res) => {
-        console.log(req.body);
-        const newGame = req.body;
-        const result = await gamerCollection.insertMany(newGame);
-        res.send(result);
-      });
+     
 
 
       app.put('/users/:id', async (req, res) => {
