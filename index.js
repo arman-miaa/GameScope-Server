@@ -40,8 +40,9 @@ async function run() {
     const gamerCollection = client.db("assignment-10").collection("Reviews");
     const watchListsCollection = client.db("assignment-10").collection("watchLists");
 
-      const userCollection = client.db("assignment-10").collection("users");
-      const personCollection = client.db("assignment-10").collection("person");
+    
+      const newGameCollection = client.db("assignment-10").collection("newGames");
+      const popularGameCollection = client.db("assignment-10").collection("popularGames");
 
 
 
@@ -175,59 +176,46 @@ async function run() {
      res.send(result);
    });
 
+    // delete my watchlist
+    app.delete('/removemywatchlist/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await watchListsCollection.deleteOne(query);
+      res.send(result);
+    })
     
     
 
        
 
-      app.get('/person', async (req, res) => {
-          const curson = personCollection.find();
-          const result = await curson.toArray();
-          res.send(result);
-      })
+      app.get("/newgame", async (req, res) => {
+        const curson = newGameCollection.find();
+        const result = await curson.toArray();
+        res.send(result);
+      });
       
-      app.post('/person', async (req, res) => {
+    
+      app.post('/newgame', async (req, res) => {
           const newPerson = req.body;
-          const result = await personCollection.insertOne(newPerson);
+          const result = await newGameCollection.insertMany(newPerson);
           res.send(result);
       })
     
-    app.patch('/person', async (req, res) => {
-      const email = req.body.email;
-      console.log(email);
-      const filter = { email };
-      const updateDoc = {
-        $set: {
-          lastLogInTime: req.body.lastLogInTime
-        },
-      };
-      const result = await personCollection.updateOne(filter, updateDoc);
-      res.send(result);
-    })
-
-   
-      
-      
-      
-      // create data
-      // app.post('/users', async (req, res) => {
-      //     console.log(req.body);
-      //     const newUser = req.body;
-      //     const result = await userCollection.insertOne(newUser);
-      //     res.send(result);
-          
-      // })
-     
-
-
-  
-
-      app.delete('/users/:id', async (req, res) => {
-          const id = req.params.id;
-          const query = { _id: new ObjectId(id) };
-          const result = await userCollection.deleteOne(query);
+      app.get("/populargame", async (req, res) => {
+        const curson = popularGameCollection.find();
+        const result = await curson.toArray();
+        res.send(result);
+      });
+    
+      app.post('/populargame', async (req, res) => {
+          const newPerson = req.body;
+          const result = await popularGameCollection.insertMany(newPerson);
           res.send(result);
       })
+    
+    
+    
+    
 
 
 
