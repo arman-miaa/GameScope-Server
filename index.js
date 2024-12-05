@@ -85,7 +85,7 @@ async function run() {
       //  console.log('get id',id);
       //  const query = { _id: new ObjectId(id) };
        const result = await gamerCollection
-         .find({ userId: req.params.userId })
+         .find({ email: req.params.userId })
          .toArray();
        res.send(result);
      });
@@ -97,6 +97,34 @@ async function run() {
        const result = await gamerCollection.deleteOne(query);
        res.send(result);
      });
+    
+    
+    // get for update review
+    app.get('/getReview/:id', async (req, res) => {
+       console.log(req.params.id);
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+
+      const result = await gamerCollection.findOne(query);
+      res.send(result);
+    })
+    
+        app.put("/updateReview/:id", async (req, res) => {
+          console.log(req.params.id);
+          const id = req.params.id;
+          const filter = { _id: new ObjectId(id) };
+          const options = { upsert: true };
+          const updateDoc = {
+            $set: req.body,
+          };
+          const result = await gamerCollection.updateOne(
+            filter,
+            updateDoc,
+            options
+          );
+          res.send(result);
+        });
+    
     
     //
 
@@ -183,17 +211,7 @@ async function run() {
      
 
 
-      app.put('/users/:id', async (req, res) => {
-          console.log(req.params.id);
-          const id = req.params.id;
-          const filter = { _id: new ObjectId(id) };
-          const options = { upsert: true };
-          const updateDoc = {
-              $set: req.body,
-          }
-          const result = await userCollection.updateOne(filter, updateDoc, options);
-          res.send(result);
-      })
+  
 
       app.delete('/users/:id', async (req, res) => {
           const id = req.params.id;
