@@ -166,6 +166,15 @@ async function run() {
       const result = await watchListsCollection.insertOne(newWatchList);
       res.send(result);
     })
+
+    // get my watchlist by email usisng query
+   app.get("/mywatchlist", async (req, res) => {
+     const email = req.query.email; 
+     console.log(email);
+     const result = await watchListsCollection.find( {userEmail: email }).toArray();
+     res.send(result);
+   });
+
     
     
 
