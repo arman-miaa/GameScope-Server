@@ -79,6 +79,16 @@ async function run() {
        const result = await gamerCollection.findOne(query);
        res.send(result);
      });
+    
+     app.get("/myreviews/:userId", async (req, res) => {
+      //  const id = req.params.userId;
+      //  console.log('get id',id);
+      //  const query = { _id: new ObjectId(id) };
+       const result = await gamerCollection
+         .find({ userId: req.params.userId })
+         .toArray();
+       res.send(result);
+     });
 
     
     //
