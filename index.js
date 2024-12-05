@@ -93,6 +93,13 @@ async function run() {
     
     //
 
+    // hiest reviews
+
+    app.get("/highest-rated-reviews", async (req, res) => {
+      const result = await gamerCollection.find().sort({ rating: -1 }).limit(6).toArray();
+      res.send(result)
+    });
+
     // review post
      app.post("/reviews", async (req, res) => {
        console.log(req.body);
