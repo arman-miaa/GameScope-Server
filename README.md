@@ -15,4 +15,4 @@ This repository contains the server-side implementation for **GameScope**, the u
 
 ## 🌐 Live Links
 
-- 🌍 **Vercel Live Link**: 👉 [https://ph-assignment10-server-lilac.vercel.app/](https://ph-assignment10-server-lilac.vercel.app/)
+- 🌍 **Vercel Live Link**: 👉 [https://gamescope-server-lilac.vercel.app/](https://gamescope-server-lilac.vercel.app/)
